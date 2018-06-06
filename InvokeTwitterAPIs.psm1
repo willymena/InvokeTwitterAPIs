@@ -10,7 +10,13 @@
 	 Description: Provides a command to call any Twitter REST API,
                   a command to access any of the Twitter Streaming APIs, 
                   and a command to upload media to Twitter.
-
+     
+     Changes by Willy Mena:
+        Fixes to Invoke-TwitterMediaUpload function
+	  resolved Error 215: Bad Authentication data
+	  resolved  Error 38: media parameter is missing
+	  fixed minor issue with file name not being sent in header 	  
+     
      Changes by Marc R Kellerman:
          Added functions to handle the RateLimitStatus 
          Added functionality to handle Multiple APIKeys
