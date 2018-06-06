@@ -3,6 +3,7 @@
 	 Created on:   	2/11/2015 1:04 PM
 	 Created by:   	Shannon Conley & Mehmet Kaya
 	 Modified by:   Marc R Kellerman
+	 Modified by:   Willy Mena (6/6/2018)
      Filename:     	InvokeTwitterAPIs.psm1
 	-------------------------------------------------------------------------
 	 Module Name: InvokeTwitterAPIs
@@ -279,7 +280,7 @@ function Invoke-TwitterMediaUpload{
            $AuthParams.Add('HttpEndPoint', $ResourceURL)
            $AuthParams.Add('RESTVerb', "POST")
            $AuthParams.Add('Params', $Parameters)
-           $AuthParams.Add('OAuthSettings', $o)
+           $AuthParams.Add('OAuthSettings', $OAuthSettings)
            $AuthorizationString = Get-OAuth -AuthorizationParams $AuthParams
            $boundary = [System.Guid]::NewGuid().ToString();
            $header = "--{0}" -f $boundary;
@@ -296,7 +297,8 @@ function Invoke-TwitterMediaUpload{
                     ".png"  = "image/png";
                  }
            $fileContentType = $contentTypeMap[$MediaFilePath.Extension.ToLower()]
-           $fileHeader = "Content-Disposition: file; name=""{0}""; filename=""{1}""" -f "media", $file.Name  
+           $file = Get-Item $MediaFilePath
+           $fileHeader = "Content-Disposition: form-data; name=""{0}""; filename=""{1}""" -f "media", $file.Name  
            [void]$contents.AppendLine($fileHeader)
            [void]$contents.AppendLine("Content-Type: {0}" -f $fileContentType)
            [void]$contents.AppendLine()
